@@ -14,15 +14,19 @@ app.get('/', (req, res) => {
     if(Object.keys(req.query).length <= 0) res.send('Movie Finder');
     else{
         let key = Object.keys(req.query)[0];
-        let data = req.query[key];
+        let queryStr = req.query[key];
 
+        queryStr === 'e1d54a0' ?
+        res.send(movies) :
         ( async () => {
-            let movie = await axios.get(`https://omdbapi.com/?${key}=${data}&apikey=e1d54a0`);
-            movies[data] = movie.data;
-            res.send(movies[data]);
+            let movie = await axios.get(`https://omdbapi.com/?${key}=${queryStr}&apikey=e1d54a0`);
+            movies[queryStr] = movie.data;
+            res.send(movies[queryStr]);
         })();
+        
     }
-})
+});
+
 
 
 
