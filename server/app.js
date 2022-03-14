@@ -19,9 +19,13 @@ app.get('/', (req, res) => {
         queryStr === 'e1d54a0' ?
         res.send(movies) :
         ( async () => {
-            let movie = await axios.get(`https://omdbapi.com/?${key}=${queryStr}&apikey=e1d54a0`);
-            movies[queryStr] = movie.data;
-            res.send(movies[queryStr]);
+            try{
+                let movie = await axios.get(`https://omdbapi.com/?${key}=${queryStr}&apikey=e1d54a0`);
+                movies[queryStr] = movie.data;
+                res.send(movies[queryStr]);
+            }catch(err){
+                console.log(err.response.status);
+            }
         })();
         
     }
